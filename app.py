@@ -37,7 +37,14 @@ def adicionar():
         return """
             <script>
                 alert("Erro: O nome do produto não pode estar vazio!");
-                window.location.href = "/";
+                window.location.replace = "/";
+            </script>
+            """
+    elif not quantidade:
+       return """
+            <script>
+                alert("Erro: A quantidade do produto não pode estar vazia!");
+                window.location.replace = "/";
             </script>
             """
     db.session.add(novo)
@@ -48,8 +55,15 @@ def adicionar():
      return """
         <script>
         alert("Erro: campos obrigatorios nao enviados!")
-        location.href = "/"
+        window.location.href = "/";
         <script/>
+        """
+   except ValueError:
+    return """
+            <script>
+                alert("Erro: quantidade inválida! Digite um número.");
+                window.location.href = "/";
+            </script>
         """
 
 # Remover quantidade
@@ -61,6 +75,11 @@ def remover():
     if produto and produto.quantidade > 0:
         produto.quantidade -= quantidade
         db.session.commit()
+    if not quantidade:
+        return
+    '''
+    <script>alert("Erro campos obrigatorios não enviados")
+        '''
     return redirect("/")
 
 # Apagar produto
